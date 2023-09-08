@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Caesar Cipher</title>
+</head>
+
+<body>
+    
+    <p>Decrypt this word: {{ encryptedword }}  (Case Sensitive)</p>
+    <div id="stopwatch">00:00:00</div>
+    <form action="#" method="post" onsubmit="return validateWord()">
+        {{ form.csrf_token }}
+        <div>
+            {{ form.word(placeholder='Decrypted Word') }}
+        </div>
+        <div >
+            <p id="error" style="visibility: hidden; color:red;" > Wrong Word </p>
+        </div>
+        <div>
+        <button type="submit"> Submit </button>
+        </div>
+    </form>
+    <script> 
+        
+        function validateWord() {
+            var inputWord = document.getElementById("word").value;
+            var actualWord = "{{ actualword }}";
+            if (inputWord === actualWord) {
+                return true;
+            } else {
+                document.getElementById("error").style.visibility = "visible";
+                return false;
+            }
+        
+        }
+
+        //Adapted from https://www.educative.io/answers/how-to-create-a-stopwatch-in-javascript
+        var startTime; // to keep track of the start time
+        var stopwatchInterval; // to keep track of the interval
+        var elapsedPausedTime = 0; // to keep track of the elapsed time while stopped
+
+        function startStopwatch() {
+        if (!stopwatchInterval) {
+            startTime = new Date().getTime() - elapsedPausedTime; // get the starting time by subtracting the elapsed paused time from the current time
+            stopwatchInterval = setInterval(updateStopwatch, 1000); // update every second
+        }
+        }
+        function updateStopwatch() {
+        var currentTime = new Date().getTime(); // get current time in milliseconds
+        var elapsedTime = currentTime - startTime; // calculate elapsed time in milliseconds
+        var seconds = Math.floor(elapsedTime / 1000) % 60; // calculate seconds
+        var minutes = Math.floor(elapsedTime / 1000 / 60) % 60; // calculate minutes
+        var hours = Math.floor(elapsedTime / 1000 / 60 / 60); // calculate hours
+        var displayTime = pad(hours) + ":" + pad(minutes) + ":" + pad(seconds); // format display time
+        document.getElementById("stopwatch").innerHTML = displayTime; // update the display
+        }
+
+        function pad(number) {
+        // add a leading zero if the number is less than 10
+        return (number < 10 ? "0" : "") + number;
+        }
+
+        startStopwatch();
+    </script>
+
+    
+
+</body>
+</html>

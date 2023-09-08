@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Leaderboard</title>
+</head>
+<style>
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+      }
+</style>
+
+<body>
+
+    <table>
+        <tr>
+            <th>Rank</th>
+            <th>Username</th>
+            <th>Time</th>
+        </tr>
+        {% for user in leaderboard %}
+        <tr>
+            <td> {{ loop.index }} </td>
+            <td> {{ user['username'] }} </td>
+            <td> {{ user['time'] }} </td>
+        </tr>
+        {% endfor %}
+    </table>
+    
+</body>
+</html>
