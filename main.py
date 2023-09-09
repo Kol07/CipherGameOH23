@@ -90,8 +90,8 @@ class CipherForm(FlaskForm):
 wordlist = ['TomCruise','Rayden','Python','Flask','Cryptography','CaesarCipher','Encryption','Decrypt'] #Change to a bigger list and list of same number of characters
 
 #File Paths
-caesarlbpath = 'caesarleaderboard.json'
-railfencelbpath = 'railfenceleaderboard.json'
+caesarlbpath = './leaderboard/caesarleaderboard.json'
+railfencelbpath = './leaderboard/caesarleaderboard.json'
 
 #Routes
 @app.route('/',methods=['GET','POST'])
