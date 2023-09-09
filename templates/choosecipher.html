@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Choose Cipher</title>
+</head>
+<body>
+    <p>Please choose the cipher you'd like to decrypt</p>
+    <form action="#" method="post">
+        {{ form.csrf_token }}
+        <div>
+            {{ form.cipher }}
+        </div>
+
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

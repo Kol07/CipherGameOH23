@@ -13,12 +13,29 @@
 <body>
 
     <table>
+        <caption> Caesar Cipher </caption>
         <tr>
             <th>Rank</th>
             <th>Username</th>
             <th>Time</th>
         </tr>
-        {% for user in leaderboard %}
+        {% for user in caesarleaderboard %}
+        <tr>
+            <td> {{ loop.index }} </td>
+            <td> {{ user['username'] }} </td>
+            <td> {{ user['time'] }} </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <br>
+    <table>
+        <caption> Rail Fence Cipher </caption>   
+        <tr>
+            <th>Rank</th>
+            <th>Username</th>
+            <th>Time</th>
+        </tr>
+        {% for user in railfenceleaderboard %}
         <tr>
             <td> {{ loop.index }} </td>
             <td> {{ user['username'] }} </td>
