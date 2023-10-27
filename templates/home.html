@@ -1,23 +1,145 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <title>Caesar Cipher</title>
-</head>
+    <head>
+        <title>Cipher Game</title>
+        <!-- bootstrap core css -->
+        <link rel="stylesheet" type="text/css" href="../static/css/bootstrap.css" />
+      
+        <!-- fonts style -->
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Poppins:400,700&display=swap" rel="stylesheet">
+        <!-- Custom styles for this template -->
+        <link href="../static/css/style.css" rel="stylesheet" />
+        <!-- responsive style -->
+        <link href="../static/css/responsive.css" rel="stylesheet" />
+        <style>
+            .btn{
+                display: inline-block;
+                padding: 10px 55px;
+                background-color: #ffffff;
+                border: 1px solid #ffffff;
+                color: #000000;
+                border-radius: 20px 20px 0 20px;
+                margin-top: 35px;
+            }
+            .btn:hover{
+                background-color: #000000;
+                color: white;
+            }
+            table, th, td {
+                border: 1px solid rgb(255, 255, 255);
+                border-collapse: collapse;
+              }
+
+        </style>
+
+      </head>
+      
 <body>
-    <form action="{{ url_for('leaderboard') }}">
-        <button type="submit">Leaderboard</button>
-
-    </form>
-
-    <p>Please enter your name to begin</p>
-    <form action="#" method="post">
-        {{ form.csrf_token }}
-        <div>
-            {{ form.username(placeholder='Name') }}
-        </div>
-        <div>
-        <button type="submit"> Submit </button>
-        </div>
-    </form>
+    <div class="hero_area">
+        <!-- header section strats -->
+        <header class="header_section">
+          <div class="container-fluid">
+            <nav class="navbar navbar-expand-lg custom_nav-container pt-3">
+              <a class="navbar-brand" href="https://www.nyp.edu.sg/">
+                <span>
+                  NYP
+                </span>
+              </a>
+              
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+    
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <div class="d-flex ml-auto flex-column flex-lg-row align-items-center">
+                  <ul class="navbar-nav  ">
+                    <li class="nav-item">
+                      <a class="nav-link" href="{{ url_for('leaderboard') }}">Leaderboard</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </nav>
+          </div>
+        </header>
+        <!-- end header section -->
+        
+        <!-- slider section -->
+        <section class=" slider_section position-relative">
+          <div class="container" > <!--style="background-color: rgba(0, 0, 0, 0.5); padding:50px-->
+            
+              <div class="carousel-inner">
+                <div class="carousel-item active">
+                  <div class="row">
+                    <div class="col">
+                      <div class="detail-box">
+                        <div>
+                          <h2>
+                            welcome to
+                          </h2>
+                          <h1>
+                            Cipher Game
+                          </h1>
+                          <p>
+                            Please enter your name to begin
+                          </p>
+                          <form action="#" method="post">
+                            {{ form.csrf_token }}
+                            <div>
+                                {{ form.username(placeholder='Name') }}
+                            </div>
+                          <div class="" >
+                            <input type="submit" value="Start" class="btn">
+                          </div>
+                        </form>
+                        <br>
+                        <div style="justify-content:center; display:flex; align-items:center;">
+                        <table style= "float:left; margin-right:20px">
+                            <caption> Caesar Cipher </caption>
+                            <tr>
+                                <th>Rank</th>
+                                <th>Username</th>
+                                <th>Time</th>
+                            </tr>
+                            {% for user in caesarleaderboard %}
+                            <tr>
+                                <td> {{ loop.index }} </td>
+                                <td> {{ user['username'] }} </td>
+                                <td> {{ user['time'] }} </td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                        
+                        <table style= "float:left;">
+                            <caption> Rail Fence Cipher </caption>   
+                            <tr>
+                                <th>Rank</th>
+                                <th>Username</th>
+                                <th>Time</th>
+                            </tr>
+                            {% for user in railfenceleaderboard %}
+                            <tr>
+                                <td> {{ loop.index }} </td>
+                                <td> {{ user['username'] }} </td>
+                                <td> {{ user['time'] }} </td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                        
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        
+        </section>
+        
+      </div>
+<script type="text/javascript" src="../static/js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="../static/js/bootstrap.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 </body>
 </html>

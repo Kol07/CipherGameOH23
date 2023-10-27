@@ -90,8 +90,8 @@ class CipherForm(FlaskForm):
 wordlist = ['TomCruise','Rayden','Python','Flask','Cryptography','CaesarCipher','Encryption','Decrypt'] #Change to a bigger list and list of same number of characters
 
 #File Paths
-caesarlbpath = './leaderboard/caesarleaderboard.json'
-railfencelbpath = './leaderboard/caesarleaderboard.json'
+caesarlbpath = './leaderboards/caesarleaderboard.json'
+railfencelbpath = './leaderboards/railfenceleaderboard.json'
 
 #Routes
 @app.route('/',methods=['GET','POST'])
@@ -108,7 +108,24 @@ def home():
         session['username'] = form.username.data
         return redirect(url_for('choosecipher'))
     
-    return render_template('home.html',form=form)
+    try:
+        if session['starttime']:
+            session.clear()
+    except:
+        pass
+    try:
+        with open(caesarlbpath,'r') as f:
+            caesarleaderboard = json.load(f)
+        caesarleaderboard.sort(key=lambda x: x['time'])
+    except:
+        caesarleaderboard = []
+    try:
+        with open(railfencelbpath,'r') as f:
+            railfenceleaderboard = json.load(f)
+        railfenceleaderboard.sort(key=lambda x: x['time'])
+    except:
+        railfenceleaderboard = []
+    return render_template('home.html',caesarleaderboard=caesarleaderboard,railfenceleaderboard=railfenceleaderboard, form=form)
 
 @app.route('/leaderboard')
 def leaderboard():
