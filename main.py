@@ -78,7 +78,7 @@ def encryptRailFence(text, key):
 #---------------------------
 #Forms
 class UsernameForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired()])
+    username = StringField('Username', validators=[])
 
 class ChooseCipherForm(FlaskForm):
     cipher = SelectField('Cipher', validators=[DataRequired()], choices=[('caesar','Caesar Cipher'),('railfence','Railfence Cipher')])
@@ -106,7 +106,7 @@ def home():
     if form.validate_on_submit():
         print('Form validated')
         session['username'] = form.username.data
-        return redirect(url_for('choosecipher'))
+        return redirect(url_for('cipher',ciphertype='caesar'))
     
     try:
         if session['starttime']:
@@ -148,13 +148,13 @@ def leaderboard():
         railfenceleaderboard = []
     return render_template('leaderboard.html',caesarleaderboard=caesarleaderboard,railfenceleaderboard=railfenceleaderboard)
 
-@app.route('/cipher',methods=['GET','POST'])
+""" @app.route('/cipher',methods=['GET','POST'])
 def choosecipher():
     form = ChooseCipherForm(request.form)
     if form.validate_on_submit():
         print('Form validated')
         return redirect(url_for('cipher',ciphertype=form.cipher.data))
-    return render_template('choosecipher.html',form=form)
+    return render_template('choosecipher.html',form=form) """
 
 @app.route('/cipher/<ciphertype>',methods=['GET','POST'])
 def cipher(ciphertype):
@@ -172,6 +172,7 @@ def cipher(ciphertype):
             lbpath = caesarlbpath
         elif ciphertype == 'railfence':
             lbpath = railfencelbpath
+            
         try:
             with open(lbpath,'r') as f:
                 leaderboard = json.load(f)

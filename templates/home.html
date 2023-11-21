@@ -29,6 +29,14 @@
                 border: 1px solid rgb(255, 255, 255);
                 border-collapse: collapse;
               }
+              #myVideo {
+                position: fixed;
+                right: 0;
+                bottom: 0;
+                min-width: 100%;
+                min-height: 100%;
+              }
+              
 
         </style>
 
@@ -36,6 +44,7 @@
       
 <body>
     <div class="hero_area">
+        <video src="/static/Rotating Earth with Global Network.mp4" autoplay muted loop id="myVideo"></video> <!--https://www.youtube.com/watch?v=kns97fe2HOA-->
         <!-- header section strats -->
         <header class="header_section">
           <div class="container-fluid">
@@ -80,9 +89,7 @@
                           <h1>
                             Cipher Game
                           </h1>
-                          <p>
-                            Please enter your name to begin
-                          </p>
+
                           <form action="#" method="post">
                             {{ form.csrf_token }}
                             <div>
@@ -94,7 +101,7 @@
                         </form>
                         <br>
                         <div style="justify-content:center; display:flex; align-items:center;">
-                        <table style= "float:left; margin-right:20px">
+                        <table >
                             <caption> Caesar Cipher </caption>
                             <tr>
                                 <th>Rank</th>
@@ -110,7 +117,7 @@
                             {% endfor %}
                         </table>
                         
-                        <table style= "float:left;">
+                        <!-- <table style= "float:left;">
                             <caption> Rail Fence Cipher </caption>   
                             <tr>
                                 <th>Rank</th>
@@ -124,7 +131,7 @@
                                 <td> {{ user['time'] }} </td>
                             </tr>
                             {% endfor %}
-                        </table>
+                        </table> -->
                     </div>
                         
                         </div>
