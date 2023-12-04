@@ -1,69 +1,168 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <title>Caesar Cipher</title>
-</head>
-
-<body>
-    <p>*Story text here*</p>
-    <p>Decrypt this word: {{ encryptedword }}  (Case Sensitive)</p>
-    <div id="stopwatch">00:00:00</div>
-    <form action="#" method="post" onsubmit="return validateWord()">
-        {{ form.csrf_token }}
-        <div>
-            {{ form.word(placeholder='Decrypted Word') }}
-        </div>
-        <div >
-            <p id="error" style="visibility: hidden; color:red;" > Wrong Word </p>
-        </div>
-        <div>
-        <button type="submit"> Submit </button>
-        </div>
-    </form>
-    <script> 
-        
-        function validateWord() {
-            var inputWord = document.getElementById("word").value;
-            var actualWord = "{{ actualword }}";
-            if (inputWord === actualWord) {
-                return true;
-            } else {
-                document.getElementById("error").style.visibility = "visible";
-                return false;
+    <head>
+        <title>Caesar Cipher</title>
+        <!-- bootstrap core css -->
+        <link rel="stylesheet" type="text/css" href="../static/css/bootstrap.css" />
+      
+        <!-- fonts style -->
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Poppins:400,700&display=swap" rel="stylesheet">
+        <!-- Custom styles for this template -->
+        <link href="../static/css/style.css" rel="stylesheet" />
+        <!-- responsive style -->
+        <link href="../static/css/responsive.css" rel="stylesheet" />
+        <style>
+            .btn{
+                display: inline-block;
+                padding: 10px 55px;
+                background-color: #ffffff;
+                border: 1px solid #ffffff;
+                color: #000000;
+                border-radius: 20px 20px 0 20px;
+                margin-top: 35px;
             }
-        
-        }
+            .btn:hover{
+                background-color: #000000;
+                color: white;
+            }
+            table, th, td {
+                border: 1px solid rgb(255, 255, 255);
+                border-collapse: collapse;
+              }
+              #myVideo {
+                position: fixed;
+                right: 0;
+                bottom: 0;
+                min-width: 100%;
+                min-height: 100%;
+                filter: brightness(50%);
+              }
+              
 
-        //Adapted from https://www.educative.io/answers/how-to-create-a-stopwatch-in-javascript
-        var startTime; // to keep track of the start time
-        var stopwatchInterval; // to keep track of the interval
-        var elapsedPausedTime = 0; // to keep track of the elapsed time while stopped
+        </style>
 
-        function startStopwatch() {
-        if (!stopwatchInterval) {
-            startTime = new Date().getTime() - elapsedPausedTime; // get the starting time by subtracting the elapsed paused time from the current time
-            stopwatchInterval = setInterval(updateStopwatch, 1000); // update every second
-        }
-        }
-        function updateStopwatch() {
-        var currentTime = new Date().getTime(); // get current time in milliseconds
-        var elapsedTime = currentTime - startTime; // calculate elapsed time in milliseconds
-        var seconds = Math.floor(elapsedTime / 1000) % 60; // calculate seconds
-        var minutes = Math.floor(elapsedTime / 1000 / 60) % 60; // calculate minutes
-        var hours = Math.floor(elapsedTime / 1000 / 60 / 60); // calculate hours
-        var displayTime = pad(hours) + ":" + pad(minutes) + ":" + pad(seconds); // format display time
-        document.getElementById("stopwatch").innerHTML = displayTime; // update the display
-        }
-
-        function pad(number) {
-        // add a leading zero if the number is less than 10
-        return (number < 10 ? "0" : "") + number;
-        }
-
-        startStopwatch();
-    </script>
-
+      </head>
+      
+<body>
+    <div class="hero_area">
+        <video src="/static/The Matrix Raining Green Code Backdrop for OBS - Teams, Zoom calls in 4k.mp4" autoplay muted loop id="myVideo"></video> <!--https://www.youtube.com/watch?v=KCVN-SuBBWM-->
+        <!-- header section strats -->
+        <header class="header_section">
+          <div class="container-fluid">
+            <nav class="navbar navbar-expand-lg custom_nav-container pt-3">
+              <a class="navbar-brand" href="https://www.nyp.edu.sg/">
+                <span>
+                  NYP
+                </span>
+              </a>
+              
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
     
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <div class="d-flex ml-auto flex-column flex-lg-row align-items-center">
+                  <ul class="navbar-nav  ">
+                    <li class="nav-item">
+                      <a class="nav-link" href="{{ url_for('leaderboard') }}">Leaderboard</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </nav>
+          </div>
+        </header>
+        <!-- end header section -->
+        
+        <!-- slider section -->
+        <section class=" slider_section position-relative">
+          <div class="container" > <!--style="background-color: rgba(0, 0, 0, 0.5); padding:50px-->
+            
+              <div class="carousel-inner">
+                <div class="carousel-item active">
+                  <div class="row">
+                    <div class="col">
+                      <div class="detail-box">
+                        <div>
+                          <h2>
+                            **STORY TEXT HERE**
+                          </h2>
+                          <h1>
+                            Decrypt this word: {{ encryptedword }}  (Case Sensitive)
+                          </h1> <br>
+                            <h1 id="demo"></h1>
+
+                          <form action="#" method="post" onsubmit="return validateWord()">
+                            {{ form.csrf_token }}
+                            <div>
+                                {{ form.word(placeholder='Decrypted Word') }}
+                            </div>
+                            <div >
+                                <p id="error" style="visibility: hidden; color:red;" > Wrong Word </p>
+                            </div>
+                            <div class="" >
+                                <input type="submit" value="Start" class="btn">
+                              </div>
+                        </form>
+                        
+                        
+                        
+                    </div>
+                        
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        
+        </section>
+        
+      </div>
+<script type="text/javascript" src="../static/js/bootstrap.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+<script> 
+        
+    function validateWord() {
+        var inputWord = document.getElementById("word").value;
+        var actualWord = "{{ actualword }}";
+        if (inputWord === actualWord) {
+            return true;
+        } else {
+            document.getElementById("error").style.visibility = "visible";
+            return false;
+        }
+    
+    }
+
+    // Set the countdown time to 5 minutes from now
+    var countDownDate = new Date();
+    countDownDate.setMinutes(countDownDate.getMinutes() + 5);
+
+    // Update the count down every 1 second
+    var x = setInterval(function() {
+
+        // Get the current date and time
+        var now = new Date().getTime();
+
+        // Find the distance between now and the count down date
+        var distance = countDownDate - now;
+
+        // Time calculations for minutes and seconds
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        // Display the result in the element with id="demo"
+        document.getElementById("demo").innerHTML = minutes + "m " + seconds + "s ";
+
+        // If the count down is finished, write some text
+        if (distance < 0) {
+        clearInterval(x);
+        document.getElementById("demo").innerHTML = "EXPIRED";
+        }
+    }, 1000);
+</script>
 
 </body>
 </html>

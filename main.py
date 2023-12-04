@@ -116,12 +116,14 @@ def home():
     try:
         with open(caesarlbpath,'r') as f:
             caesarleaderboard = json.load(f)
+        caesarleaderboard = [entry for entry in caesarleaderboard if entry['time'] != '']
         caesarleaderboard.sort(key=lambda x: x['time'])
     except:
         caesarleaderboard = []
     try:
         with open(railfencelbpath,'r') as f:
             railfenceleaderboard = json.load(f)
+        railfenceleaderboard = [entry for entry in railfenceleaderboard if entry['time'] != '']
         railfenceleaderboard.sort(key=lambda x: x['time'])
     except:
         railfenceleaderboard = []
@@ -137,16 +139,21 @@ def leaderboard():
     try:
         with open(caesarlbpath,'r') as f:
             caesarleaderboard = json.load(f)
+        
+        caesarleaderboard = [entry for entry in caesarleaderboard if entry['time'] != '']
         caesarleaderboard.sort(key=lambda x: x['time'])
     except:
         caesarleaderboard = []
     try:
         with open(railfencelbpath,'r') as f:
             railfenceleaderboard = json.load(f)
+        
+        railfenceleaderboard = [entry for entry in railfenceleaderboard if entry['time'] != '']
         railfenceleaderboard.sort(key=lambda x: x['time'])
     except:
         railfenceleaderboard = []
-    return render_template('leaderboard.html',caesarleaderboard=caesarleaderboard,railfenceleaderboard=railfenceleaderboard)
+
+    return render_template('leaderboard.html',caesarleaderboard=caesarleaderboard,railfenceleaderboard=railfenceleaderboard, top10=request.args.get('top10'))
 
 """ @app.route('/cipher',methods=['GET','POST'])
 def choosecipher():
@@ -176,9 +183,23 @@ def cipher(ciphertype):
         try:
             with open(lbpath,'r') as f:
                 leaderboard = json.load(f)
-                datadict['username'] = session['username']
-                datadict['time'] = str(timediff)
-                leaderboard.append(datadict)
+                leaderboard.sort(key=lambda x: x['time'], reverse=True)
+                #If time is faster than any of the times in the leaderboard, replace it
+                lbcounter = 0
+                top10 = False
+                for i in leaderboard:
+                    print(i['time'])
+                    if str(timediff) < i['time']:
+                        datadict['username'] = session['username']
+                        datadict['time'] = str(timediff)
+                        leaderboard.insert(lbcounter,datadict)
+                        leaderboard.sort(key=lambda x: x['time'])
+                        leaderboard.pop()
+                        top10=1
+                        break
+                    else:
+                        lbcounter += 1
+                
             with open(lbpath,'w') as f:
                 json.dump(leaderboard,f, indent=4)
 
@@ -188,10 +209,14 @@ def cipher(ciphertype):
                 datadict['time'] = str(timediff)
                 leaderboard = []
                 leaderboard.append(datadict)
+                #Populate leaderboard with 10 empty entries
+                for i in range(9):
+                    leaderboard.append({'username':'','time':''})
                 json.dump(leaderboard,f, indent=4)
+                top10 = 1
             
         session.clear()
-        return redirect(url_for('leaderboard'))
+        return redirect(url_for('leaderboard',top10=top10))
     
     randomword = wordlist[random.randint(0,len(wordlist)-1)]
     print(randomword)
