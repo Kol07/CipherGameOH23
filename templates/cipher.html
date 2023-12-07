@@ -160,6 +160,8 @@
         if (distance < 0) {
         clearInterval(x);
         document.getElementById("demo").innerHTML = "EXPIRED";
+        alert("Time's up! *Story text here*.");
+        window.location.href = "{{ url_for('leaderboard') }}";
         }
     }, 1000);
 </script>
